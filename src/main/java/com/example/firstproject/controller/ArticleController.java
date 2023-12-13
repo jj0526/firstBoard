@@ -34,7 +34,7 @@ public class ArticleController {
         Article saved = articleRepository.save(article);
         log.info(form.toString());
         //System.out.println(saved.toString());
-        return "";
+        return "redirect:/articles/" + saved.getId();
     }
 
     @GetMapping("/articles/{id}")
@@ -51,8 +51,8 @@ public class ArticleController {
         //1. 모든 데이터 가져오기
         model.addAttribute("articleList", articleEntityList);
         //2. 모델에 데이터 등록하기
-        //3. 뷰 페이지 설정하기
         return "articles/index";
+        //3. 뷰 페이지 설정하기
     }
 
 
