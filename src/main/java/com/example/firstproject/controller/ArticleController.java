@@ -65,5 +65,18 @@ public class ArticleController {
         return "articles/edit";
     }
 
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form){ //매개변수로 DTO 받아오기
+        Article articleEntity = form.toEntity();
+        // 1. DTO를 엔티티로 변환하기
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        if (target != null){
+            articleRepository.save(articleEntity);  //엔티티를 DB에 저장
+        }
+        // 2. 엔티티를 DB에 저장하기
+        return "redirect:/articles/"+articleEntity.getId();
+        // 3. 수정 결과 페이지로 리다이렉트하기
+    }
+
 
 }
