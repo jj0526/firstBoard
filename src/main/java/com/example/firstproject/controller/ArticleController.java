@@ -28,13 +28,10 @@ public class ArticleController {
     @PostMapping("/articles/create")
     public String createArticle(ArticleForm form){
         log.info(form.toString());
-        //System.out.println(form.toString());
         Article article = form.toEntity();
         log.info(form.toString());
-        //System.out.println(article.toString());
         Article saved = articleRepository.save(article);
         log.info(form.toString());
-        //System.out.println(saved.toString());
         return "redirect:/articles/" + saved.getId();
     }
 
