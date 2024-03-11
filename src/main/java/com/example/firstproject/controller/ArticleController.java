@@ -1,8 +1,12 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.ArticleForm;
+import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
+import com.example.firstproject.repository.CommentRepository;
+import com.example.firstproject.service.ArticleService;
+import com.example.firstproject.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j //able to leave logs
 @Controller
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/articles/new")
     public String newArticleForm(){
@@ -27,21 +34,35 @@ public class ArticleController {
 
     @PostMapping("/articles/create")
     public String createArticle(ArticleForm form){
-        log.info(form.toString());
         Article article = form.toEntity();
-        log.info(form.toString());
         Article saved = articleRepository.save(article);
         log.info(form.toString());
         return "redirect:/articles/" + saved.getId();
     }
 
+
     @GetMapping("/articles/{id}")
     public String show(@PathVariable Long id, Model model){
-        log.info("id = " + id);
         Article articleEntity = articleRepository.findById(id).orElse(null);
+        List<CommentDto> commentsDtos = commentService.comments(id);
         model.addAttribute("article", articleEntity);   //add articleEntity as name "article"
+        model.addAttribute("commentDtos", commentsDtos);
         return "articles/show";
     }
+
+    /*
+    @Autowired
+    private ArticleService articleService;
+    @GetMapping("/articles/{id}")
+    public String show(@PathVariable Long id, Model model){
+        Article article = articleService.show(id);
+        List<CommentDto> commentsDtos = commentService.comments(id);
+        model.addAttribute("article", article);
+        model.addAttribute("commentDtos", commentsDtos);
+        return "articles/show";
+
+    }
+    */
 
     @GetMapping("/articles")
     public String index(Model model){
@@ -53,14 +74,14 @@ public class ArticleController {
         //3. 뷰 페이지 설정하기
     }
 
-    @GetMapping("/articles/{id}/edit")
+    @GetMapping("/articles/{id}/edit")  //edit 페이지 로딩
     public String edit(@PathVariable Long id, Model model){
-        //수정할 데이터 가져오기
         Article articleEntity = articleRepository.findById(id).orElse(null);
-        //모델에 데이터 등록하기
+        //수정할 데이터 가져오기
+
         model.addAttribute("article", articleEntity);
-        //뷰 페이지 설정하기
-        return "articles/edit";
+        //모델에 데이터 등록하기
+        return "articles/edit";//뷰 페이지 설정하기
     }
 
     @PostMapping("/articles/update")
@@ -77,13 +98,13 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{id}/delete")
-    public String delete(@PathVariable Long id, RedirectAttributes rttr){
+    public String delete(@PathVariable Long id, RedirectAttributes rttr){   //id를 매개 변수로
         log.info("삭제 요청이 들어왔습니다");
         Article target = articleRepository.findById(id).orElse(null);
         //1. 삭제할 대상 가져오기
         if (target != null) {
             articleRepository.delete(target);
-            rttr.addFlashAttribute("msg", "삭제되었습니다");
+            rttr.addFlashAttribute("msg", "삭제되었습니다");   //redirect to the referer
         }
         //2. 대상 엔티티 삭제하기
         return "redirect:/articles";
