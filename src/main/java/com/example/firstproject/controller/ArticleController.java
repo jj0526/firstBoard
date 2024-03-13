@@ -100,9 +100,11 @@ public class ArticleController {
     @GetMapping("/articles/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes rttr){   //id를 매개 변수로
         log.info("삭제 요청이 들어왔습니다");
+
         Article target = articleRepository.findById(id).orElse(null);
         //1. 삭제할 대상 가져오기
         if (target != null) {
+            commentService.deleteCommentsByArticleId(id);
             articleRepository.delete(target);
             rttr.addFlashAttribute("msg", "삭제되었습니다");   //redirect to the referer
         }
