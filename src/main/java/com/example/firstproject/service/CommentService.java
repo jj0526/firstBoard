@@ -78,4 +78,10 @@ public class CommentService {
         commentRepository.delete(target);
         return  CommentDto.createCommentDto(target);
     }
+    public void deleteCommentsByArticleId(Long articleId) {
+        List<Comment> comments = commentRepository.findByArticleId(articleId);
+        if (comments != null && !comments.isEmpty()) {
+            commentRepository.deleteAll(comments);
+        }
+    }
 }

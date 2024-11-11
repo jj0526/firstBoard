@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+import jakarta.validation.constraints.NotEmpty;
 @Entity
 @Getter
 @ToString
@@ -17,12 +17,16 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     @ManyToOne
     @JoinColumn(name="article_id") //Article 엔티티와 기본키(id)와 매핑
     private Article article;
 
+    @NotEmpty
     @Column
     private String nickname;
+
+    @NotEmpty
     @Column
     private String body;
 
