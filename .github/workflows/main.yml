@@ -1,0 +1,8 @@
+# GitActions - SSH로 EC2 접속	
+name: EC2접속
+uses:appleboy/ssh-action
+	  host: ${{ secrets.REMOTE_IP }}
+	  username: ${{ secrets.REMOTE_USER }}
+	  key: ${{ secrets.REMOTE_IDENTITYFILE }}
+	  port: ${{ secrets.REMOTE_PORT }}
+	  script: # ec2에 접속하여 실행할 명령어를 들여쓰기 후 서술한다.
