@@ -59,11 +59,11 @@ jobs:
 
       # DockerFile로 현재 어플리케이션을 이미지로 빌드
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USER_NAME }}/{깃허브 레포명}:{버전} .
+        run: docker build -t ${{ secrets.DOCKER_USER_NAME }}/sihyeonie/firstproject:1.0 .
 
       # 빌드한 이미지를 도커 허브 레포지토리에 Push
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USER_NAME }}/{깃허브 레포명}
+        run: docker push ${{ secrets.DOCKER_USER_NAME }}/sihyeonie/firstproject:1.0
 
   # 작업 2. deploy
   deploy:
