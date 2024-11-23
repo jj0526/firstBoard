@@ -57,6 +57,7 @@ jobs:
           username: ${{ secrets.DOCKER_USER_NAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+
       # DockerFile로 현재 어플리케이션을 이미지로 빌드
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_USER_NAME }}/sihyeonie/firstproject:1.0 .
