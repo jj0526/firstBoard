@@ -74,7 +74,7 @@ jobs:
     steps:
       # EC2 서버로 배포한다.
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@master # ssh 접속 uses 사용
+        uses: appleboy/ssh-action@v1.0.3 # ssh 접속 uses 사용
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.EC2_USER }}
