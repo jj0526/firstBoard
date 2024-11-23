@@ -1,6 +1,6 @@
 # deploy.sh
 # 도커 이미지 pull
-docker pull docker pull sihyeon0526/practice:1.0
+docker pull sihyeon0526/practice:1.0
 
 # deploy.sh
 # 'app-server'라는 이름의 도커 컨테이너가 실행 중인 경우, 컨테이너를 중지하고 삭제
