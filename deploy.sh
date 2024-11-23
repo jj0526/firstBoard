@@ -13,4 +13,4 @@ fi
 
 # deploy.sh
 echo "새로운 컨테이너 실행"
-docker run --name app-server --env-file ./myenv -d -p 8080:8080 sihyeon0526/practice:1.0
+docker run --name app-server --env-file /home/ubuntu/practice/firstBoard/myenv -d -p 8080:8080 sihyeon0526/practice:1.0
