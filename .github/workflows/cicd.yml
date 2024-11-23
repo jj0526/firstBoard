@@ -54,17 +54,17 @@ jobs:
       - name: Docker Hub Login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.cicd.DOCKER_USER_NAME }}
-          password: ${{ secrets.cicd.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
 
       # DockerFile로 현재 어플리케이션을 이미지로 빌드
       - name: Build Docker image
-        run: docker build -t ${{ secrets.cicd.DOCKER_USER_NAME }}/practice:1.0 .
+        run: docker build -t ${{ secrets.DOCKER_USER_NAME }}/practice:1.0 .
 
       # 빌드한 이미지를 도커 허브 레포지토리에 Push
       - name: Push Docker image
-        run: docker push ${{ secrets.cicd.DOCKER_USER_NAME }}/practice:1.0
+        run: docker push ${{ secrets.DOCKER_USER_NAME }}/practice:1.0
 
   # 작업 2. deploy
   deploy:
@@ -76,8 +76,8 @@ jobs:
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master # ssh 접속 uses 사용
         with:
-          host: ${{ secrets.cicd.HOST }}
-          username: ${{ secrets.cicd.EC2_USER }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: sudo /home/ubuntu/deploy.sh
