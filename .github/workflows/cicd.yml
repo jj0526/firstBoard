@@ -81,5 +81,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: sudo /home/ubuntu/practice/firstBoard/deploy.sh
+          debug: true  # Enable debugging output
           # sudo [deploy.sh가 있는 위치]
           # 또는 cd /[deploy.sh가 있는 위치] && sudo ./deploy.sh
