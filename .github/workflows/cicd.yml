@@ -52,8 +52,10 @@ jobs:
 
       # 도커 허브에 로그인
       - name: Docker Hub Login
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USER_NAME }} --password-stdin
-
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
 
       # DockerFile로 현재 어플리케이션을 이미지로 빌드
